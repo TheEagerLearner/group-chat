@@ -1,9 +1,11 @@
-import React,{useState} from 'react';
-
+import React from 'react';
 import io from 'socket.io-client';
 import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle} from '@mui/material'
 import Snack from './assets/components/Snack';
 import InputBar from './assets/components/InputBar';
+import BtmTextField from './assets/components/BtmTextField';
+import './App.css';
+
 const socket = io('http://localhost:3002')
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
   //Handling Closing option for Dialog -------------------
   const handleClose = () => {
     setSnOpen(prevState => ({...prevState, open: false}));
-    console.log(open)
+    // console.log(open)
   };
 
 
@@ -43,8 +45,8 @@ function App() {
     setMsg(message)  
   })
 
-  const [inputValue, setInputValue] = useState('');
-  const [msg,setMsg] = useState("")
+  const [inputValue, setInputValue] = React.useState('');
+  const [msg,setMsg] = React.useState("")
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,7 +58,10 @@ function App() {
 
 
   return (
-  <div>
+  <div className='blue-950'>
+    <>
+      <BtmTextField />
+    </>
 
     <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
