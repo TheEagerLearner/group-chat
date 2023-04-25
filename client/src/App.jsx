@@ -4,6 +4,7 @@ import {Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle}
 import Snack from './assets/components/Snack';
 import InputBar from './assets/components/InputBar';
 import BtmTextField from './assets/components/BtmTextField';
+import Chat from './assets/components/Chat';
 import './App.css';
 
 const socket = io('http://localhost:3002')
@@ -13,6 +14,8 @@ function App() {
   const [sn_open,setSnOpen] = React.useState({open:false,text:"Success",sev:"success"});
   const [username,setUsername] = React.useState('PolarBear');
   const [room,setRoom] = React.useState('global');
+  const [inputValue, setInputValue] = React.useState('');
+  const [messages,setMessages] = React.useState([])
 
 
   //Function to validate the Data entered in Dialog---------------
@@ -37,31 +40,57 @@ function App() {
   // ---------Socket Logic and functions ---------------------
   //Eastablishing Socket Connection ------------
   socket.on('connect',()=>{
-    console.log(socket.connected) //Grabbing Socket Status
+    console.log("connection eastablished with server") //Grabbing Socket Status
+    // console.log(socket.connected)
   })
+
 
   //Recv Broadcasted Message back
   socket.on('rec',message=>{
-    setMsg(message)  
+    console.log(message)
+    setMessages([...messages,message])
   })
 
-  const [inputValue, setInputValue] = React.useState('');
-  const [msg,setMsg] = React.useState("")
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const message = {
+      message:inputValue,
+      author:username
+    }
+
     //Sending Socket message to Server
-    socket.emit('message',inputValue);
+    // setMessages([...messages,message])
+    socket.emit('message',message);
     setInputValue("")
   
   };
 
-
   return (
   <div className='blue-950'>
+  
+  <div className='flex flex-col'>
     <>
-      <BtmTextField />
+      <ul>
+        {messages.map((message) => (
+          <li>
+            <Chat
+              me={message.author === username} 
+              author={message.author}
+              message={message.message}
+            />
+          </li>
+        ))}
+      </ul>      
     </>
+  </div>
+      <BtmTextField 
+        value={inputValue}
+        onChange={(event)=>{setInputValue(event.target.value)}}
+        onSubmit={handleSubmit}
+      />
+    
 
     <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
