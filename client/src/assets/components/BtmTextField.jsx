@@ -5,10 +5,10 @@ import '@fortawesome/fontawesome-free/css/all.css';
 const BtmTextField = ({onChange,value,onSubmit})=>{
 
     return(
-    <div className="absolute bottom-4 w-screen">
-        <div className="flex items-center border border-gray-200 rounded-100 p-3 mx-10 shadow-lg">
+    <div className="fixed bottom-4 w-screen">
+        <div className="flex items-center border bg-white border-gray-200 rounded-100 p-3 mx-10 shadow-lg">
             <input
-                className="border-none w-full px-3 py-1 ml-4 text-gray-700 leading-tight focus:outline-none"
+                className="border-none w-full h-full px-3 py-1 ml-4 text-gray-700 leading-tight focus:outline-none"
                 type="text"
                 placeholder="Type a message"
                 onChange={onChange}

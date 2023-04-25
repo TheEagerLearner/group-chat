@@ -5,6 +5,8 @@ import Snack from './assets/components/Snack';
 import InputBar from './assets/components/InputBar';
 import BtmTextField from './assets/components/BtmTextField';
 import Chat from './assets/components/Chat';
+import { animateScroll } from 'react-scroll';
+
 import './App.css';
 
 const socket = io('http://localhost:3002')
@@ -16,6 +18,7 @@ function App() {
   const [room,setRoom] = React.useState('global');
   const [inputValue, setInputValue] = React.useState('');
   const [messages,setMessages] = React.useState([])
+  const bottomRef = React.useRef(null);
 
 
   //Function to validate the Data entered in Dialog---------------
@@ -66,13 +69,17 @@ function App() {
     setInputValue("")
   
   };
-
-  return (
+      React.useEffect(() => {
+          bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+      }, [messages]);
+  
+  
+      return (
   <div className='blue-950'>
   
-  <div className='flex flex-col'>
-    <>
-      <ul>
+  <div id='messages-container' ref={bottomRef} className='pb-28 overflow-y-scroll h-screen'>
+
+      <ul className='pb-28'>
         {messages.map((message) => (
           <li>
             <Chat
@@ -83,7 +90,7 @@ function App() {
           </li>
         ))}
       </ul>      
-    </>
+
   </div>
       <BtmTextField 
         value={inputValue}
