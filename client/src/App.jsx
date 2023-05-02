@@ -60,7 +60,8 @@ function App() {
     event.preventDefault();
     const message = {
       message:inputValue,
-      author:username
+      author:username,
+      room:room
     }
 
     //Sending Socket message to Server
