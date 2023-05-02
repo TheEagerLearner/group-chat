@@ -5,7 +5,7 @@ import Snack from './assets/components/Snack';
 import InputBar from './assets/components/InputBar';
 import BtmTextField from './assets/components/BtmTextField';
 import Chat from './assets/components/Chat';
-import { animateScroll } from 'react-scroll';
+import Header from './assets/components/Header';
 
 import './App.css';
 
@@ -77,10 +77,13 @@ function App() {
   
       return (
   <div className='blue-950'>
-  
+  <Header 
+    clientid={username}
+    room={room}
+  />
   <div id='messages-container' ref={bottomRef} className='pb-28 overflow-y-scroll h-screen'>
 
-      <ul className='pb-28'>
+      <ul className='pb-28 pt-16'>
         {messages.map((message) => (
           <li>
             <Chat
